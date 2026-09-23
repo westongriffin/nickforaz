@@ -27,8 +27,9 @@
       --ink-2: #111418;
       --paper: #f3ece0;
       --sand: #cfc6b6;
-      --gold: #d4a017;
-      --red: #d9493a;
+      --gold: #e2432f;
+      --red: #ff4b36;
+      --blood: #2a0b08;
       --mute: #8d8578;
       --line: rgba(243,236,224,.12);
       --serif: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
@@ -80,7 +81,7 @@
     .hero h1 em { font-style: normal; color: var(--gold); }
     .hero .lede { font-size: clamp(18px, 1.6vw, 22px); color: var(--sand); max-width: 34ch; line-height: 1.4; }
     .hero .lede strong { color: var(--paper); font-weight: 600; }
-    .hero-pic { position: relative; min-height: 480px; border: 1px solid var(--line); overflow: hidden; }
+    .hero-pic { position: relative; min-height: 480px; border: 1px solid var(--line); overflow: hidden; margin: 0; }
     .hero-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 25%; }
     .hero-pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(9,11,13,0) 60%, rgba(9,11,13,.55) 100%); }
     .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
@@ -169,8 +170,8 @@
 
     /* The job explainer */
     .job { background: var(--paper); color: var(--ink); padding: 52px 0; }
-    .job p.eyebrow { color: #8a6a07; font-size: 11px; }
-    .job h2 { font-family: var(--serif); font-size: clamp(32px, 5vw, 56px); line-height: .98; margin: 8px 0 16px; max-width: 18ch; }
+    .job p.eyebrow { color: #a8261a; font-size: 11px; }
+    .job h2 { font-family: var(--serif); font-size: clamp(32px, 5vw, 56px); line-height: .98; margin: 8px 0 16px; max-width: 22ch; }
     .job p { font-size: 18px; max-width: 58ch; color: #2b2a27; }
     .job .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 28px; }
     .job .cols div { border-top: 3px solid var(--ink); padding-top: 12px; }
@@ -200,9 +201,39 @@
     footer ul { list-style: none; }
 
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    /* Warning ticker */
+    .rail { background: var(--gold); color: var(--ink); overflow: hidden; white-space: nowrap; font: 800 11px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; padding: 9px 0; }
+    .rail span { display: inline-block; padding-left: 100%; animation: tick 38s linear infinite; }
+    @keyframes tick { to { transform: translateX(-100%); } }
+    @media (prefers-reduced-motion: reduce) { .rail span { animation: none; padding-left: 20px; } }
+
+    /* Monochrome, red-tinted photography */
+    .hero-pic { background: var(--blood); }
+    .hero-pic img { filter: grayscale(1) contrast(1.25) brightness(.82); mix-blend-mode: luminosity; }
+    .hero-pic::after { background: linear-gradient(180deg, rgba(42,11,8,.15) 40%, rgba(9,11,13,.92) 100%); }
+    .hero-pic figcaption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 16px 18px; font-size: 13px; line-height: 1.4; color: var(--sand); }
+    .hero-pic figcaption b { display: block; color: var(--paper); font-weight: 700; }
+    .hero-pic figcaption span { color: var(--red); font-weight: 600; }
+    .split .pic, .fullpic { background-color: var(--blood); background-blend-mode: luminosity; }
+    .fullpic::after { background: linear-gradient(180deg, rgba(42,11,8,.35), rgba(9,11,13,.92)); }
+
+    /* Harsher accents */
+    .hit { border-top: 3px solid var(--gold); }
+    .band strong { color: var(--red); }
+    .hero h1 em { text-decoration: line-through; text-decoration-thickness: .06em; text-decoration-color: var(--paper); }
+    .tldr ol { border-top: 3px solid var(--gold); }
+    .close { background: linear-gradient(180deg, var(--ink), var(--blood)); }
+    @media (max-width: 900px) {
+      .hero-pic { aspect-ratio: auto; max-height: none; }
+      .hero-pic img { position: relative; aspect-ratio: 16 / 10; height: auto; max-height: 320px; }
+      .hero-pic::after { display: none; }
+      .hero-pic figcaption { position: static; border-top: 1px solid var(--line); }
+    }
   </style>
 </head>
 <body>
+  <div class="rail" aria-hidden="true"><span>Voter warning &nbsp;·&nbsp; 36-month state probation &nbsp;·&nbsp; 21% federal loan default rate &nbsp;·&nbsp; Connecticut pulled approval &nbsp;·&nbsp; 58% completion &nbsp;·&nbsp; More risk with school money &nbsp;·&nbsp; $33 billion on the line</span></div>
   <header class="top">
     <div class="wrap">
       <a class="brand" href="#top">Never <span>Mansour</span></a>
@@ -220,7 +251,7 @@
     <section class="hero">
       <div class="wrap hero-inner">
         <div class="hero-copy">
-          <p class="eyebrow"><span>Arizona State Treasurer</span><span class="dot"> · </span><span>Election Day Nov. 3</span></p>
+          <p class="eyebrow"><span>Voter warning · AZ Treasurer</span><span class="dot"> · </span><span>Election Day Nov. 3</span></p>
           <h1>Never<br><em>Mansour.</em></h1>
           <p class="lede">Nick Mansour ran a for-profit nursing college whose Tempe program the State put on <strong>36 months of probation</strong>. Now he wants to manage Arizona’s <strong>$33 billion</strong> — and take more risk with school money.</p>
           <div class="ctas">
@@ -228,16 +259,17 @@
             <a class="btn btn-ghost" href="receipts.html">Check the receipts</a>
           </div>
         </div>
-        <div class="hero-pic">
+        <figure class="hero-pic">
           <img src="img/mansour.jpg" alt="Nick Mansour, Democratic candidate for Arizona State Treasurer" width="1400" height="933" fetchpriority="high">
-        </div>
+          <figcaption><b>Nick Mansour</b>Chairman &amp; CEO, Arizona College of Nursing. <span>Its Tempe program: 36-month state probation, 2022.</span></figcaption>
+        </figure>
       </div>
     </section>
 
     <section class="tldr" aria-labelledby="tldr-h">
       <div class="wrap">
         <p class="eyebrow">The 30-second version</p>
-        <h2 id="tldr-h">Three things to know before you vote.</h2>
+        <h2 id="tldr-h">Three red flags before you vote.</h2>
         <ol>
           <li>
             <b>His college’s program went on state probation.</b>
@@ -351,7 +383,7 @@
     <section class="job" aria-labelledby="job-h">
       <div class="wrap">
         <p class="eyebrow">Why it matters</p>
-        <h2 id="job-h">The Treasurer’s job is to protect the money.</h2>
+        <h2 id="job-h">The Treasurer’s job is to protect the money. His record says otherwise.</h2>
         <p>Arizona’s Treasurer oversees about $33 billion — the state’s cash and the endowment that helps fund public schools. The job rewards caution. His pitch is growth.</p>
         <div class="cols">
           <div><b>Safety first</b><span>The job is to keep public money safe and available — not to chase returns.</span></div>
