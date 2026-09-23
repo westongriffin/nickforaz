@@ -42,6 +42,7 @@
     :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
     img { display: block; max-width: 100%; }
     .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+    @media (min-width: 1600px) { .wrap { max-width: 1240px; } }
     .eyebrow, p.eyebrow, .split p.eyebrow, .close p.eyebrow { letter-spacing: .24em; text-transform: uppercase; font-size: 11px; line-height: 1.5; font-weight: 600; color: var(--gold); }
     .serif { font-family: var(--serif); }
 
@@ -70,18 +71,18 @@
     .btn-ghost { background: transparent; color: var(--paper); }
     .btn-gold { background: var(--gold); border-color: var(--gold); color: var(--ink); }
 
-    /* Hero: copy sits on the .wrap column; photo bleeds to the right edge */
-    .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
-    .hero-inner { position: relative; z-index: 2; min-height: min(78vh, 720px); display: flex; align-items: center; }
-    .hero-copy { width: 56%; padding: 56px 32px 56px 0; }
+    /* Hero: copy + framed photo, both on the .wrap column */
+    .hero { border-bottom: 1px solid var(--line); }
+    .hero-inner { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: stretch; padding-top: 56px; padding-bottom: 56px; }
+    .hero-copy { display: flex; flex-direction: column; justify-content: center; }
     .hero .eyebrow span { white-space: nowrap; }
-    .hero h1 { font-family: var(--serif); font-size: clamp(64px, 10vw, 140px); line-height: .84; font-weight: 700; letter-spacing: -.04em; margin: 18px 0 22px; }
+    .hero h1 { font-family: var(--serif); font-size: clamp(64px, 8.4vw, 136px); line-height: .84; font-weight: 700; letter-spacing: -.04em; margin: 18px 0 22px; }
     .hero h1 em { font-style: normal; color: var(--gold); }
-    .hero .lede { font-size: clamp(18px, 2vw, 22px); color: var(--sand); max-width: 32ch; line-height: 1.4; }
+    .hero .lede { font-size: clamp(18px, 1.6vw, 22px); color: var(--sand); max-width: 34ch; line-height: 1.4; }
     .hero .lede strong { color: var(--paper); font-weight: 600; }
-    .hero-pic { position: absolute; top: 0; right: 0; bottom: 0; width: 46%; }
-    .hero-pic img { width: 100%; height: 100%; object-fit: cover; object-position: 55% 30%; }
-    .hero-pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--ink) 0%, rgba(9,11,13,.3) 30%, rgba(9,11,13,.05) 100%); }
+    .hero-pic { position: relative; min-height: 480px; border: 1px solid var(--line); overflow: hidden; }
+    .hero-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 25%; }
+    .hero-pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(9,11,13,0) 60%, rgba(9,11,13,.55) 100%); }
     .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
     .stamp {
       position: absolute; z-index: 2;
@@ -89,10 +90,8 @@
       font-weight: 800; letter-spacing: .16em; text-transform: uppercase; font-size: 14px; padding: 8px 12px; transform: rotate(-7deg);
     }
     @media (max-width: 900px) {
-      .hero-inner { min-height: 0; display: block; }
-      .hero-pic { position: relative; width: auto; height: 56vw; max-height: 340px; }
-      .hero-pic::after { background: linear-gradient(180deg, rgba(9,11,13,.05) 45%, var(--ink) 100%); }
-      .hero-copy { width: auto; padding: 4px 0 44px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 24px; padding-top: 20px; padding-bottom: 44px; }
+      .hero-pic { order: -1; min-height: 0; aspect-ratio: 16 / 10; max-height: 360px; }
       .hero .lede { max-width: 40ch; }
     }
     @media (max-width: 480px) {
@@ -118,7 +117,7 @@
     .band .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .band .wrap > div { padding: 26px 20px 22px; border-left: 1px solid var(--line); }
     .band .wrap > div:first-child { border-left: 0; padding-left: 0; }
-    .band strong { display: block; font-family: var(--serif); font-size: clamp(34px, 4.6vw, 56px); line-height: .9; white-space: nowrap; }
+    .band strong { display: block; font-family: var(--serif); font-size: clamp(34px, 4vw, 56px); line-height: .9; white-space: nowrap; }
     .band span { display: block; margin-top: 10px; font-size: 13px; color: var(--mute); line-height: 1.35; max-width: 22ch; }
     @media (max-width: 900px) {
       .band .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -218,9 +217,6 @@
 
   <main id="top">
     <section class="hero">
-      <div class="hero-pic">
-          <img src="img/mansour.jpg" alt="Nick Mansour, Democratic candidate for Arizona State Treasurer" width="1400" height="933" fetchpriority="high">
-      </div>
       <div class="wrap hero-inner">
         <div class="hero-copy">
           <p class="eyebrow"><span>Arizona State Treasurer</span><span class="dot"> · </span><span>Election Day Nov. 3</span></p>
@@ -230,6 +226,9 @@
             <a class="btn btn-solid" href="#record">See the record ↓</a>
             <a class="btn btn-ghost" href="receipts.html">Check the receipts</a>
           </div>
+        </div>
+        <div class="hero-pic">
+          <img src="img/mansour.jpg" alt="Nick Mansour, Democratic candidate for Arizona State Treasurer" width="1400" height="933" fetchpriority="high">
         </div>
       </div>
     </section>
@@ -261,7 +260,7 @@
     <div class="band"><div class="wrap" role="list" aria-label="Key numbers">
       <div role="listitem"><strong>36 mo</strong><span>State Nursing Board probation, Tempe BSN program</span></div>
       <div role="listitem"><strong>14</strong><span>Complaints the Board logged in 2021</span></div>
-      <div role="listitem"><strong>2.5→5%+</strong><span>Endowment payout he says could be raised</span></div>
+      <div role="listitem"><strong>5%+</strong><span>Endowment payout he floated, up from about 2.5%</span></div>
       <div role="listitem"><strong>$33B</strong><span>What the Treasurer oversees</span></div>
     </div></div>
 
